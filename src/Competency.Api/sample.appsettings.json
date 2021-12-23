@@ -1,0 +1,23 @@
+﻿{
+  "AzureAd": {
+    "Instance": "",
+    "Domain": "",
+    "TenantId": "",
+    "ClientId": "",
+    "CallbackPath": "/signin-oidc",
+    "AuthorizationUrl":"https://login.microsoftonline.com/{{TenantID}}/oauth2/v2.0/authorize",
+    "TokenUrl":"https://login.microsoftonline.com/{{TenantID}}/oauth2/v2.0/token",
+
+    "ScopesBaseUrl": "{{base uri for api scopes}}",
+    "Scopes": "{{scopes separated by space}}",
+    "OpenIdClientId": "{{Id of a client app}}",
+    "ClientSecret": ""
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
