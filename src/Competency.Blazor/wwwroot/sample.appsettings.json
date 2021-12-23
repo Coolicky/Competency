@@ -1,0 +1,10 @@
+﻿{
+  "AzureAd": {
+    "Authority": "https://login.microsoftonline.com/{{TenantId}}",
+    "ClientId": "",
+    "ValidateAuthority": true,
+    "ScopesBaseUrl": "{{base uri for api scopes}}",
+    "Scopes": "{{scopes separated by space}}"
+  },
+  "ApiServerAddress": "api server url"
+}
