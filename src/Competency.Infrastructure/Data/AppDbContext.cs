@@ -1,5 +1,4 @@
 ﻿using Ardalis.EFCore.Extensions;
-using Competency.Core.ProjectAggregate;
 using Competency.SharedKernel;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +19,8 @@ public class AppDbContext : DbContext
     _mediator = mediator;
   }
 
-  public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();
-  public DbSet<Project> Projects => Set<Project>();
+  // public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();
+  // public DbSet<Project> Projects => Set<Project>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

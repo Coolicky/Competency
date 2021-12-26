@@ -19,4 +19,11 @@
     <ProjectReference Include="..\Competency.SharedKernel\Competency.SharedKernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ProjectAggregate\Events" />
+    <Folder Include="ProjectAggregate\Handlers" />
+    <Folder Include="ProjectAggregate\Specifications" />
+    <Folder Include="Services" />
+  </ItemGroup>
+
 </Project>

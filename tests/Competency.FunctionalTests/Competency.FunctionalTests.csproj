@@ -28,4 +28,9 @@
     <ProjectReference Include="..\Competency.UnitTests\Competency.UnitTests.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ApiEndpoints" />
+    <Folder Include="ControllerApis" />
+  </ItemGroup>
+
 </Project>

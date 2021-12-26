@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Autofac;
+using Competency.Core.Entities;
 using Competency.Core.Interfaces;
-using Competency.Core.ProjectAggregate;
 using Competency.Infrastructure.Data;
 using Competency.SharedKernel.Interfaces;
 using MediatR;
@@ -18,7 +18,7 @@ public class DefaultInfrastructureModule : Module
   public DefaultInfrastructureModule(bool isDevelopment, Assembly? callingAssembly = null)
   {
     _isDevelopment = isDevelopment;
-    var coreAssembly = Assembly.GetAssembly(typeof(Project)); // TODO: Replace "Project" with any type from your Core project
+    var coreAssembly = Assembly.GetAssembly(typeof(Person));
     var infrastructureAssembly = Assembly.GetAssembly(typeof(StartupSetup));
     if (coreAssembly != null)
     {
