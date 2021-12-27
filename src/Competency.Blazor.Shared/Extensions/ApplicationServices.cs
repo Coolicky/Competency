@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Competency.Blazor.Extensions;
+namespace Competency.Blazor.Shared.Extensions;
 
 public static class ApplicationServices
 {
-  public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration config)
+  public static IServiceCollection AddAzureAuthentication(this IServiceCollection services, IConfiguration config)
   {
     services.AddMsalAuthentication(options =>
     {
@@ -23,7 +25,6 @@ public static class ApplicationServices
     
     return services;
   }
-  
   public static IServiceCollection ConfigureApiHttpClient(this IServiceCollection services, IConfiguration config)
   {
     services.AddHttpClient("WebApi",

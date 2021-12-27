@@ -35,7 +35,8 @@ app.UseCors(policy =>
 {
   policy.AllowAnyHeader()
     .AllowAnyMethod()
-    .WithOrigins("https://localhost:7011");
+    .WithOrigins("https://localhost:7011")
+    .WithOrigins("https://localhost:7223");;
 });
 
 app.UseAuthentication();
