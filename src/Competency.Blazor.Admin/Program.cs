@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Competency.Blazor.Admin;
-using Competency.Blazor.Shared.Extensions;
+using Competency.Blazor.Shared.Authorization;
+using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 var services = builder.Services;
@@ -13,5 +14,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 services.AddGraphClientService();
 services.ConfigureHttpClient("WebApi", config["DataApi:BaseAddress"]);
 services.AddAzureAuthentication(config);
+services.AddMudServices();
 
 await builder.Build().RunAsync();

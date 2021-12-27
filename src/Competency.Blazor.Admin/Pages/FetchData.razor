@@ -1,4 +1,7 @@
 ﻿@page "/fetchdata"
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
 
 @inject IAccessTokenProvider _tokenProvider
 @inject IHttpClientFactory _clientFactory

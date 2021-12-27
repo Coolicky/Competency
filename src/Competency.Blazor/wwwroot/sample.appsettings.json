@@ -2,9 +2,10 @@
   "AzureAd": {
     "Authority": "https://login.microsoftonline.com/{{TenantId}}",
     "ClientId": "",
-    "ValidateAuthority": true,
-    "ScopesBaseUrl": "{{base uri for api scopes}}",
-    "Scopes": "{{scopes separated by space}}"
+    "ValidateAuthority": true
   },
-  "ApiServerAddress": "api server url"
+  "Specific API being called by app":{
+    "Scope": "scope",
+    "BaseAddress": "base url"
+  }
 }
