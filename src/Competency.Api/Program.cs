@@ -1,14 +1,17 @@
 using Competency.Api.Extensions;
+using Competency.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var config = builder.Configuration;
 
 // Add services to the container.
-services.AddAuthentication(config);
+services.AddMicrosoftIdentityAuthentication(config);
 services.AddControllers();
 services.AddSwaggerServices(config);
 services.ConfigureCors();
+
+services.AddSqlServerDbContext(config["DatabaseConnection"]);
 
 var app = builder.Build();
 
