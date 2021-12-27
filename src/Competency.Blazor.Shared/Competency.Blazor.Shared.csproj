@@ -11,6 +11,17 @@
       <PackageReference Include="Microsoft.Authentication.WebAssembly.Msal" Version="6.0.1" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
       <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+      <PackageReference Include="Microsoft.Graph" Version="4.13.0" />
+      <PackageReference Include="MudBlazor" Version="6.0.2" />
+      <PackageReference Include="MudBlazor.ThemeManager" Version="1.0.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Competency.Core\Competency.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Extensions" />
     </ItemGroup>
 
 </Project>

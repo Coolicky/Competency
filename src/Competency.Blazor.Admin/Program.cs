@@ -10,9 +10,8 @@ var config = builder.Configuration;
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
-services.ConfigureApiHttpClient(config);
+services.AddGraphClientService();
+services.ConfigureHttpClient("WebApi", config["DataApi:BaseAddress"]);
 services.AddAzureAuthentication(config);
 
 await builder.Build().RunAsync();
