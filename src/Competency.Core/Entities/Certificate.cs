@@ -1,12 +1,21 @@
-﻿namespace Competency.Core.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using Competency.SharedKernel;
+using Competency.SharedKernel.Interfaces;
 
-public class Certificate
+namespace Competency.Core.Entities;
+
+public class Certificate : BaseEntity, IAggregateRoot
 {
   
-  public int Id { get; set; }
-  public string Name { get; set; }
-  public string Company { get; set; }
-  public string Software { get; set; }
+  [Required]
+  [StringLength(255, ErrorMessage = "Certificate Name cannot be longer than 255 characters.")]
+  public string Name { get; private set; }
+  
+  [StringLength(255, ErrorMessage = "Company Name cannot be longer than 255 characters.")]
+  public string Company { get; private set; }
+  
+  [StringLength(255, ErrorMessage = "Software Name cannot be longer than 255 characters.")]
+  public string Software { get; private set; }
         
   public override string ToString()
   {

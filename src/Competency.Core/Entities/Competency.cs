@@ -1,13 +1,17 @@
-﻿namespace Competency.Core.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using Competency.SharedKernel;
+using Competency.SharedKernel.Interfaces;
 
-public class Competency
+namespace Competency.Core.Entities;
+
+public class Competency : BaseEntity, IAggregateRoot
 {
-  
-  public int Id { get; set; }
-  public string Name { get; set; }
-  // public virtual List<Question> Questions { get; set; }
-  public virtual List<Employee> Users { get; set; }
-  // public virtual List<Training> Trainings { get; set; }
+  [Required]
+  [StringLength(255, ErrorMessage = "Competency Name cannot be longer than 255 characters.")]
+  public string Name { get; private set; }
+  // public virtual List<Question> Questions { get; private set; }
+  public virtual List<Employee> Users { get; private set; }
+  // public virtual List<Training> Trainings { get; private set; }
         
   public override string ToString()
   {

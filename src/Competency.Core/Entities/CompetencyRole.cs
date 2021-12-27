@@ -1,6 +1,12 @@
-﻿namespace Competency.Core.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using Competency.SharedKernel;
+using Competency.SharedKernel.Interfaces;
 
-public class CompetencyRole
+namespace Competency.Core.Entities;
+
+public class CompetencyRole : BaseEntity, IAggregateRoot
 {
-  public string Name { get; set; }
+  [Required]
+  [StringLength(25, ErrorMessage = "Role Name cannot be longer than 25 characters.")]
+  public string Name { get; private set; }
 }

@@ -1,34 +1,28 @@
-﻿using Competency.SharedKernel;
-using Competency.SharedKernel.Interfaces;
+﻿using System.ComponentModel.DataAnnotations;
+using Competency.SharedKernel;
 
 namespace Competency.Core.Entities;
 
 public class Person : BaseEntity
 {
-  public string IdentityGuid { get; set; }
-  public string Name { get; set; }
-  public string Surname { get; set; }
+  [Required] [StringLength(36)] public string IdentityGuid { get; private set; }
 
-  public string JobRole { get; set; }
-  public override string ToString()
-  {
-    return $"{Name} {Surname}";
-  }
-  
-  public Department Department { get; set; }
-  public Office Office { get; set; }
-  public virtual List<CompetencyRole> Roles { get; set; }
-}
+  [Required]
+  [StringLength(50, ErrorMessage = "First Name cannot be longer than 50 characters.")]
+  [Display(Name = "First Name")]
+  public string FirstName { get; private set; }
 
-public class Employee : Person, IAggregateRoot
-{
-  public List<Project> Projects { get; set; }
-  public List<Certificate> Certificates { get; set; }
-  public List<Competency> Competencies { get; set; }
-}
+  [Required]
+  [Display(Name = "Last Name")]
+  public string LastName { get; private set; }
 
-public class Manager : Person, IAggregateRoot
-{
-  public List<Project> Projects { get; set; }
-  public List<Employee> Employees { get; set; }
+  public string JobRole { get; private set; }
+
+  [Display(Name = "Full Name")] public string FullName => $"{FirstName} {LastName}";
+
+  public int DepartmentId { get; private set; }
+  public virtual Department Department { get; private set; }
+  public int OfficeId { get; private set; }
+  public virtual Office Office { get; private set; }
+  public virtual List<CompetencyRole> Roles { get; private set; }
 }
