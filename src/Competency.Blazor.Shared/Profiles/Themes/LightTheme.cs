@@ -1,10 +1,10 @@
 ﻿using MudBlazor;
 
-namespace Competency.Blazor.Shared.Theme;
+namespace Competency.Blazor.Shared.Profiles.Themes;
 
-public class MainTheme : MudTheme
+public class LightTheme : MudTheme
 {
-  public MainTheme()
+  public LightTheme()
   {
     Palette = new Palette()
     {

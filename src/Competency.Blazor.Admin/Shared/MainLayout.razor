@@ -1,16 +1,18 @@
 @inherits LayoutComponentBase
+@inject ProfileService _profileService
+@implements IDisposable
 
-<MudThemeProvider Theme="_themeManager.Theme" />
-<MudDialogProvider />
-<MudSnackbarProvider />
+<MudThemeProvider Theme="@(_preference.DarkMode ? _darkTheme : _lightTheme)"/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
 
 <MudLayout>
     <MudAppBar Elevation="25">
         <MudHidden Breakpoint="Breakpoint.SmAndDown">
-            <MudIcon Icon="@Icons.Custom.Brands.MudBlazor" Size="Size.Large" />
+            <MudIcon Icon="@Icons.Custom.Brands.MudBlazor" Size="Size.Large"/>
         </MudHidden>
         <MudHidden Breakpoint="Breakpoint.MdAndUp">
-            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
         </MudHidden>
         <MudHidden Breakpoint="Breakpoint.Xs">
             <MudText Typo="Typo.h6" Class="ml-4">MudBlazor.Template</MudText>
@@ -18,29 +20,23 @@
         <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
             <MudText Typo="Typo.subtitle2">MudBlazor.Template</MudText>
         </MudHidden>
-        <MudSpacer />
-        <MudMenu Icon="@Icons.Material.Outlined.Translate" Color="Color.Inherit" Direction="Direction.Bottom" OffsetY="true" Dense="true">
-            <MudMenuItem>English</MudMenuItem>
-            <MudMenuItem>Swedish</MudMenuItem>
-            <MudMenuItem>Old Norse</MudMenuItem>
-        </MudMenu>
-        <MudMenu Icon="@Icons.Material.Outlined.Widgets" Color="Color.Inherit" Direction="Direction.Bottom" OffsetY="true" Dense="true">
-            <MudMenuItem Link="https://mudblazor.com/">MudBlazor</MudMenuItem>
-            <MudMenuItem Link="https://github.com/Garderoben/MudBlazor.Templates">Source Code</MudMenuItem>
-        </MudMenu>
+        <MudSpacer/>
+        <MudTooltip Text="@(_preference.DarkMode ? "Set Light Mode" : "Set Dark Mode")">
+            <MudIconButton Icon="@(_preference.DarkMode ? Icons.Material.Outlined.LightMode : @Icons.Material.Outlined.DarkMode)"
+                           Color="Color.Inherit"
+                           OnClick="ToggleTheme"/>
+        </MudTooltip>
         <LoginDisplay/>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="25" ClipMode="DrawerClipMode.Always">
-        <NavMenu />
+        <NavMenu/>
     </MudDrawer>
     <MudMainContent>
         <MudHidden Breakpoint="Breakpoint.SmAndDown">
             <MudToolBar DisableGutters="true">
-                <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
+                <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3"/>
                 <MudBreadcrumbs Items="_items"></MudBreadcrumbs>
-                <MudSpacer />
-                <MudButton Variant="Variant.Text" Link="https://mudblazor.com/" Style="color:#594AE2;">MudBlazor</MudButton>
-                <MudButton Variant="Variant.Text" OnClick="UpdateTheme" Style="color:#424242;" Class="mr-3">Theme</MudButton>
+                <MudSpacer/>
             </MudToolBar>
         </MudHidden>
         <MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
@@ -51,37 +47,38 @@
 
 
 @code {
-    private ThemeManagerTheme _themeManager = new()
-    {
-        DrawerClipMode = DrawerClipMode.Always,
-        FontFamily = "Montserrat",
-        DefaultBorderRadius = 6,
-        AppBarElevation = 1,
-        DrawerElevation = 1
-    };
 
     private bool _drawerOpen = true;
-    private MainTheme _mainTheme = new();
-    private DefaultTheme _defaultTheme = new();
+    private Preference _preference = new();
+    private readonly LightTheme _lightTheme = new();
+    private readonly DarkTheme _darkTheme = new();
 
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
     }
 
+    protected override async Task OnInitializedAsync()
+    {
+        _profileService.Onchange += ProfileServiceOnChange;
+        _preference = await _profileService.GetPreferences();
+        StateHasChanged();
+    }
+
+    private void ProfileServiceOnChange(Preference preference)
+    {
+        _preference = preference;
+        StateHasChanged();
+    }
+
     protected override void OnInitialized()
     {
-        _themeManager.Theme = _mainTheme;
         StateHasChanged();
-    } 
+    }
 
-    void UpdateTheme()
+    async void ToggleTheme()
     {
-        if (_themeManager.Theme == _mainTheme)
-            _themeManager.Theme = _defaultTheme;
-        else
-            _themeManager.Theme = _mainTheme;
-        StateHasChanged();
+        await _profileService.ToggleDarkMode();
     }
 
     private List<BreadcrumbItem> _items = new List<BreadcrumbItem>
@@ -89,4 +86,10 @@
         new BreadcrumbItem("Personal", href: "#"),
         new BreadcrumbItem("Dashboard", href: "#"),
     };
+
+    public void Dispose()
+    {
+        _profileService.Onchange -= ProfileServiceOnChange;
+    }
+
 }
