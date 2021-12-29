@@ -4,6 +4,10 @@ namespace Competency.Core.CompetencyAggregate.Entities;
 
 public abstract class Person : BaseEntity
 {
+  public Person()
+  {
+  }
+
   protected Person(string identityGuid)
   {
     IdentityGuid = identityGuid;
@@ -22,6 +26,6 @@ public abstract class Person : BaseEntity
   public string FullName => $"{FirstName} {LastName}";
   public Department? Department { get; set; }
   public Office? Office { get; set; }
-  public List<CompetencyRole> Roles { get; set; }
-  public List<Project> Projects { get; set; }
+  public List<CompetencyRole>? Roles { get; set; }
+  public List<Project>? Projects { get; set; }
 }

@@ -4,7 +4,10 @@ namespace Competency.Core.CompetencyAggregate.Entities;
 
 public class Manager : Person, IAggregateRoot
 {
-  public List<Employee> Employees { get; set; }
+  public Manager()
+  {
+  }
+  public List<Employee>? Employees { get; set; }
   
   public Manager(string identityGuid) : base(identityGuid)
   {

@@ -4,6 +4,9 @@ namespace Competency.Core.CompetencyAggregate.Entities.Requests;
 
 public abstract class Request : BaseEntity
 {
+  public Request()
+  {
+  }
   protected Request(Person recipient, string message, int daysToComplete)
   {
     Recipient = recipient;

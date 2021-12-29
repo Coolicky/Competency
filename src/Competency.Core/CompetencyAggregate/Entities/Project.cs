@@ -13,7 +13,7 @@ public class Project : BaseEntity, IAggregateRoot
   }
   public string ProjectNumber { get; set; }
   public string Name { get; set; }
-  public List<Person> Users { get; set; }
+  public List<Person>? Users { get; set; }
 
   public override string ToString()
   {

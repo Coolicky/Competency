@@ -5,6 +5,10 @@ namespace Competency.Core.CompetencyAggregate.Entities.TrainingAggregate;
 
 public class Training : BaseEntity, IAggregateRoot
 {
+  public Training()
+  {
+  }
+
   public Training(Competency competency)
   {
     Code = String.Empty;
@@ -12,10 +16,10 @@ public class Training : BaseEntity, IAggregateRoot
     Competency = competency;
     Modules = new List<TrainingModule>();
   }
-  
+
   public string Code { get; set; }
   public string Name { get; set; }
-  public List<TrainingModule> Modules { get; set; }
+  public List<TrainingModule>? Modules { get; set; }
   public Competency Competency { get; set; }
 
   public override string ToString()

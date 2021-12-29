@@ -15,7 +15,7 @@ public class Department : BaseEntity, IAggregateRoot
 
   public string Name { get; set; }
   public string Abbreviation { get; set; }
-  public List<SurveyQuestion> Questions { get; set; }
+  public List<SurveyQuestion>? Questions { get; set; }
 
   public override string ToString()
   {

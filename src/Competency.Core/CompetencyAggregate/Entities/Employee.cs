@@ -4,8 +4,12 @@ namespace Competency.Core.CompetencyAggregate.Entities;
 
 public class Employee : Person, IAggregateRoot
 {
-  public List<Certificate> Certificates { get; set; }
-  public List<Competency> Competencies { get; set; }
+  public Employee()
+  {
+  }
+
+  public List<Certificate>? Certificates { get; set; }
+  public List<Competency>? Competencies { get; set; }
 
   public Employee(string identityGuid) : base(identityGuid)
   {

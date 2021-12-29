@@ -6,6 +6,10 @@ namespace Competency.Core.CompetencyAggregate.Entities.SurveyAggregate;
 
 public class SurveyQuestion : BaseEntity, IAggregateRoot
 {
+  public SurveyQuestion()
+  {
+  }
+
   public SurveyQuestion(Competency competency)
   {
     Competency = competency;
@@ -16,7 +20,7 @@ public class SurveyQuestion : BaseEntity, IAggregateRoot
     Status = QuestionStatus.Draft;
     TrainingModules = new List<TrainingModule>();
   }
-  
+
   public Competency Competency { get; set; }
   public QuestionLevel Level { get; set; }
   public string Question { get; set; }
@@ -24,7 +28,7 @@ public class SurveyQuestion : BaseEntity, IAggregateRoot
   public int ResponseValue { get; set; }
   public List<Department> Departments { get; set; }
   public QuestionStatus Status { get; set; }
-  public List<TrainingModule> TrainingModules { get; set; }
+  public List<TrainingModule>? TrainingModules { get; set; }
 
   public enum QuestionStatus
   {

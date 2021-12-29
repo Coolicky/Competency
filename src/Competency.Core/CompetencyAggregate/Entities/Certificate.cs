@@ -17,7 +17,7 @@ public class Certificate : BaseEntity, IAggregateRoot
   public string Company { get; set; }
   
   public string Software { get; set; }
-  public List<Employee> Employees { get; set; }
+  public List<Employee>? Employees { get; set; }
         
   public override string ToString()
   {

@@ -1,4 +1,5 @@
-﻿using Competency.SharedKernel;
+﻿using Competency.Core.CompetencyAggregate.Entities.Requests;
+using Competency.SharedKernel;
 using Competency.SharedKernel.Interfaces;
 
 namespace Competency.Core.CompetencyAggregate.Entities.SurveyAggregate;
@@ -9,7 +10,11 @@ public class Survey : BaseEntity, IAggregateRoot
   private const double Need = 0.7;
   private const double CriticalNeed = 0.9;
 
-  public Survey(Employee employee, Competency competency, List<SurveyAnswer> answers)
+  public Survey()
+  {
+  }
+
+  public Survey(Employee employee, Competency competency, List<SurveyAnswer>? answers)
   {
     Employee = employee;
     Competency = competency;
@@ -19,12 +24,13 @@ public class Survey : BaseEntity, IAggregateRoot
     DateTime = DateTime.Now;
   }
 
-  public virtual Employee Employee { get; private set; }
-  public virtual Competency Competency { get; private set; }
-  public virtual List<SurveyAnswer> Answers { get; private set; }
-  public string Notes { get; private set; }
-  public SurveyStatus Status { get; private set; }
-  public DateTime DateTime { get; private set; }
+  public Employee Employee { get; set; }
+  public Competency Competency { get; set; }
+  public List<SurveyAnswer>? Answers { get; set; }
+  public SurveyRequest? Request { get; set; }
+  public string Notes { get; set; }
+  public SurveyStatus Status { get; set; }
+  public DateTime DateTime { get; set; }
   public double BeginnerResult => GetValue(SurveyQuestion.QuestionLevel.Beginner, false);
   public double IntermediateResult => GetValue(SurveyQuestion.QuestionLevel.Intermediate, false);
   public double AdvancedResult => GetValue(SurveyQuestion.QuestionLevel.Advanced, false);
@@ -66,6 +72,7 @@ public class Survey : BaseEntity, IAggregateRoot
 
     return Math.Round(percentage, 4);
   }
+
   private int FinalGrade()
   {
     var beginner = BeginnerResult >= Need

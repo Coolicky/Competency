@@ -15,9 +15,9 @@ public class Competency : BaseEntity, IAggregateRoot
     Name = String.Empty;
   }
   public string Name { get; set; }
-  public List<Employee> Users { get; set; }
-  public List<Training> Trainings { get; set; }
-  public List<SurveyQuestion> Questions { get; set; }
+  public List<Employee>? Users { get; set; }
+  public List<Training>? Trainings { get; set; }
+  public List<SurveyQuestion>? Questions { get; set; }
         
   public override string ToString()
   {

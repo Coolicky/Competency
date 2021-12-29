@@ -12,7 +12,7 @@ public class Office : BaseEntity, IAggregateRoot
   }
 
   public string Location { get; set; }
-  public List<Person> Users { get; set; }
+  public List<Person>? Users { get; set; }
 
   public override string ToString()
   {
