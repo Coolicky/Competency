@@ -35,9 +35,9 @@ public class ProfileService
     {
       prefersDarkMode = await _jsRuntime.InvokeAsync<bool>("prefersDarkMode");
     }
-    catch (Exception)
+    catch (Exception ex)
     {
-      // ignored
+      Console.Write(ex.ToString());
     }
 
     return new Preference { DarkMode = prefersDarkMode };

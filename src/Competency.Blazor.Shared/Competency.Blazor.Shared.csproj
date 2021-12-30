@@ -23,6 +23,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Services" />
+      <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.1\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
+      </Reference>
     </ItemGroup>
 </Project>
