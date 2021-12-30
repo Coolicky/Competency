@@ -7,14 +7,15 @@ namespace Competency.Api.Extensions;
 
 public static class ApplicationServices
 {
-  public static IServiceCollection AddMicrosoftIdentityAuthentication(this IServiceCollection services, IConfiguration config)
+  public static IServiceCollection AddMicrosoftIdentityAuthentication(this IServiceCollection services,
+    IConfiguration config)
   {
     services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
       .AddMicrosoftIdentityWebApi(config.GetSection("AzureAd"));
-    
+
     return services;
   }
-  
+
   public static IServiceCollection ConfigureCors(this IServiceCollection services)
   {
     services.AddCors(options =>
@@ -24,9 +25,10 @@ public static class ApplicationServices
         policyBuilder.WithHeaders(HeaderNames.Authorization).AllowAnyMethod();
       });
     });
-    
+
     return services;
   }
+
   public static IServiceCollection AddSwaggerServices(this IServiceCollection services, IConfiguration config)
   {
     services.AddEndpointsApiExplorer();
@@ -34,6 +36,8 @@ public static class ApplicationServices
     var scopes = config["AzureAd:Scopes"]?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
     services.AddSwaggerGen(c =>
     {
+      c.SwaggerDoc("v1", new OpenApiInfo { Title = "Competency API", Version = "v1" });
+      c.EnableAnnotations();
       c.AddSecurityDefinition("oauth2",
         new OpenApiSecurityScheme
         {
