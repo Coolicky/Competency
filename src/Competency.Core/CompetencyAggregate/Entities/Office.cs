@@ -7,12 +7,12 @@ public class Office : BaseEntity, IAggregateRoot
 {
   public Office()
   {
-    Users = new List<Person>();
+    Users = new List<User>();
     Location = String.Empty;
   }
 
   public string Location { get; set; }
-  public List<Person>? Users { get; set; }
+  public List<User>? Users { get; set; }
 
   public override string ToString()
   {

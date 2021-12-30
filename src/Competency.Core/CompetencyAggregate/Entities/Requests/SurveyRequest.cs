@@ -9,7 +9,7 @@ public class SurveyRequest : Request, IAggregateRoot
   {
     
   }
-  public SurveyRequest(Person recipient, string message, int daysToComplete, Survey survey, Competency competency) : base(recipient, message, daysToComplete)
+  public SurveyRequest(User recipient, string message, int daysToComplete, Survey survey, Competency competency) : base(recipient, message, daysToComplete)
   {
     Survey = survey;
     Competency = competency;

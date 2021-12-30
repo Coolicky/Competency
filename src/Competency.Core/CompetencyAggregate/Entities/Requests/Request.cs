@@ -7,7 +7,7 @@ public abstract class Request : BaseEntity
   public Request()
   {
   }
-  protected Request(Person recipient, string message, int daysToComplete)
+  protected Request(User recipient, string message, int daysToComplete)
   {
     Recipient = recipient;
     Message = message;
@@ -15,8 +15,8 @@ public abstract class Request : BaseEntity
     DueDate = CreatedDate.AddDays(daysToComplete);
   }
   
-  public Person? CreatedBy { get; set; }
-  public Person Recipient { get; set; }
+  public User? CreatedBy { get; set; }
+  public User Recipient { get; set; }
   public DateTime DueDate { get; set; }
   public DateTime CreatedDate { get; set; }
   public bool Resolved { get; set; }

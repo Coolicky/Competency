@@ -14,9 +14,9 @@ public class Survey : BaseEntity, IAggregateRoot
   {
   }
 
-  public Survey(Employee employee, Competency competency, List<SurveyAnswer>? answers)
+  public Survey(User user, Competency competency, List<SurveyAnswer>? answers)
   {
-    Employee = employee;
+    User = user;
     Competency = competency;
     Answers = answers;
     Notes = String.Empty;
@@ -24,7 +24,7 @@ public class Survey : BaseEntity, IAggregateRoot
     DateTime = DateTime.Now;
   }
 
-  public Employee Employee { get; set; }
+  public User User { get; set; }
   public Competency Competency { get; set; }
   public List<SurveyAnswer>? Answers { get; set; }
   public SurveyRequest? Request { get; set; }

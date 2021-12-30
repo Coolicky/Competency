@@ -18,6 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="CompetencyAggregate\Interfaces" />
+    <Folder Include="CompetencyAggregate\Services" />
     <Folder Include="ProjectAggregate\Events" />
     <Folder Include="ProjectAggregate\Handlers" />
     <Folder Include="ProjectAggregate\Specifications" />

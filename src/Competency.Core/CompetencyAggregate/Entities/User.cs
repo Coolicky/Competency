@@ -1,14 +1,15 @@
 ﻿using Competency.SharedKernel;
+using Competency.SharedKernel.Interfaces;
 
 namespace Competency.Core.CompetencyAggregate.Entities;
 
-public abstract class Person : BaseEntity
+public class User : BaseEntity, IAggregateRoot
 {
-  public Person()
+  public User()
   {
   }
 
-  protected Person(string identityGuid)
+  protected User(string identityGuid)
   {
     IdentityGuid = identityGuid;
     Roles = new List<CompetencyRole>();
@@ -16,6 +17,9 @@ public abstract class Person : BaseEntity
     FirstName = String.Empty;
     LastName = String.Empty;
     JobRole = String.Empty;
+    Certificates = new List<Certificate>();
+    Competencies = new List<Competency>();
+    Employees = new List<User>();
   }
 
   public string IdentityGuid { get; set; }
@@ -28,4 +32,8 @@ public abstract class Person : BaseEntity
   public Office? Office { get; set; }
   public List<CompetencyRole>? Roles { get; set; }
   public List<Project>? Projects { get; set; }
+  
+  public List<Certificate>? Certificates { get; set; }
+  public List<Competency>? Competencies { get; set; }
+  public List<User>? Employees { get; set; }
 }

@@ -12,9 +12,9 @@ public class CompetencyRole : BaseEntity, IAggregateRoot
   public CompetencyRole(string name)
   {
     Name = name;
-    Users = new List<Person>();
+    Users = new List<User>();
   }
 
   public string Name { get; }
-  public List<Person>? Users { get; set; }
+  public List<User>? Users { get; set; }
 }
