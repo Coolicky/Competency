@@ -5,14 +5,14 @@ namespace Competency.SharedKernel;
 // source: https://github.com/jhewlett/ValueObject
 public abstract class ValueObject : IEquatable<ValueObject>
 {
-  private List<PropertyInfo>? properties;
-  private List<FieldInfo>? fields;
+  private List<PropertyInfo>? _properties;
+  private List<FieldInfo>? _fields;
 
   public static bool operator ==(ValueObject? obj1, ValueObject? obj2)
   {
-    if (object.Equals(obj1, null))
+    if (Equals(obj1, null))
     {
-      if (object.Equals(obj2, null))
+      if (Equals(obj2, null))
       {
         return true;
       }
@@ -41,19 +41,19 @@ public abstract class ValueObject : IEquatable<ValueObject>
 
   private bool PropertiesAreEqual(object obj, PropertyInfo p)
   {
-    return object.Equals(p.GetValue(this, null), p.GetValue(obj, null));
+    return Equals(p.GetValue(this, null), p.GetValue(obj, null));
   }
 
   private bool FieldsAreEqual(object obj, FieldInfo f)
   {
-    return object.Equals(f.GetValue(this), f.GetValue(obj));
+    return Equals(f.GetValue(this), f.GetValue(obj));
   }
 
   private IEnumerable<PropertyInfo> GetProperties()
   {
-    if (this.properties == null)
+    if (this._properties == null)
     {
-      this.properties = GetType()
+      this._properties = GetType()
           .GetProperties(BindingFlags.Instance | BindingFlags.Public)
           .Where(p => p.GetCustomAttribute(typeof(IgnoreMemberAttribute)) == null)
           .ToList();
@@ -62,19 +62,19 @@ public abstract class ValueObject : IEquatable<ValueObject>
       // !Attribute.IsDefined(p, typeof(IgnoreMemberAttribute))).ToList();
     }
 
-    return this.properties;
+    return this._properties;
   }
 
   private IEnumerable<FieldInfo> GetFields()
   {
-    if (this.fields == null)
+    if (this._fields == null)
     {
-      this.fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public)
+      this._fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public)
           .Where(p => p.GetCustomAttribute(typeof(IgnoreMemberAttribute)) == null)
           .ToList();
     }
 
-    return this.fields;
+    return this._fields;
   }
 
   public override int GetHashCode()
