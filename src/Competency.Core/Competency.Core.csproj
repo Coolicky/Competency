@@ -11,6 +11,7 @@
     <PackageReference Include="Ardalis.GuardClauses" Version="3.3.0" />
     <PackageReference Include="Ardalis.Result" Version="3.1.2" />
     <PackageReference Include="Ardalis.Specification" Version="5.2.0" />
+    <PackageReference Include="Autofac" Version="6.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,12 +19,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="CompetencyAggregate\Clients" />
     <Folder Include="CompetencyAggregate\Interfaces" />
     <Folder Include="CompetencyAggregate\Services" />
-    <Folder Include="ProjectAggregate\Events" />
-    <Folder Include="ProjectAggregate\Handlers" />
-    <Folder Include="ProjectAggregate\Specifications" />
     <Folder Include="Services" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

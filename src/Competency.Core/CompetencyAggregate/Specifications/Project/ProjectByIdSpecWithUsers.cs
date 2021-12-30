@@ -11,4 +11,6 @@ public sealed class ProjectByIdSpecWithUsers : Specification<Project>, ISingleRe
       .Where(project => project.Id == id)
       .Include(r => r.Users);
   }
+
+  public const string Route = "/Projects/{id:int}";
 }
