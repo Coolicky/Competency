@@ -137,7 +137,7 @@ namespace Competency.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Person",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -148,26 +148,25 @@ namespace Competency.Infrastructure.Data.Migrations
                     JobRole = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: true),
                     OfficeId = table.Column<int>(type: "int", nullable: true),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ManagerId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Person", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Person_Departments_DepartmentId",
+                        name: "FK_Users_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Person_Offices_OfficeId",
+                        name: "FK_Users_Offices_OfficeId",
                         column: x => x.OfficeId,
                         principalTable: "Offices",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Person_Person_ManagerId",
-                        column: x => x.ManagerId,
-                        principalTable: "Person",
+                        name: "FK_Users_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
@@ -217,7 +216,7 @@ namespace Competency.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CertificateEmployee",
+                name: "CertificateUser",
                 columns: table => new
                 {
                     CertificatesId = table.Column<int>(type: "int", nullable: false),
@@ -225,47 +224,23 @@ namespace Competency.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CertificateEmployee", x => new { x.CertificatesId, x.EmployeesId });
+                    table.PrimaryKey("PK_CertificateUser", x => new { x.CertificatesId, x.EmployeesId });
                     table.ForeignKey(
-                        name: "FK_CertificateEmployee_Certificates_CertificatesId",
+                        name: "FK_CertificateUser_Certificates_CertificatesId",
                         column: x => x.CertificatesId,
                         principalTable: "Certificates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CertificateEmployee_Person_EmployeesId",
+                        name: "FK_CertificateUser_Users_EmployeesId",
                         column: x => x.EmployeesId,
-                        principalTable: "Person",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CompetencyEmployee",
-                columns: table => new
-                {
-                    CompetenciesId = table.Column<int>(type: "int", nullable: false),
-                    UsersId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CompetencyEmployee", x => new { x.CompetenciesId, x.UsersId });
-                    table.ForeignKey(
-                        name: "FK_CompetencyEmployee_Competencies_CompetenciesId",
-                        column: x => x.CompetenciesId,
-                        principalTable: "Competencies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CompetencyEmployee_Person_UsersId",
-                        column: x => x.UsersId,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CompetencyRolePerson",
+                name: "CompetencyRoleUser",
                 columns: table => new
                 {
                     RolesId = table.Column<int>(type: "int", nullable: false),
@@ -273,23 +248,47 @@ namespace Competency.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CompetencyRolePerson", x => new { x.RolesId, x.UsersId });
+                    table.PrimaryKey("PK_CompetencyRoleUser", x => new { x.RolesId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_CompetencyRolePerson_Person_UsersId",
-                        column: x => x.UsersId,
-                        principalTable: "Person",
+                        name: "FK_CompetencyRoleUser_Roles_RolesId",
+                        column: x => x.RolesId,
+                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CompetencyRolePerson_Roles_RolesId",
-                        column: x => x.RolesId,
-                        principalTable: "Roles",
+                        name: "FK_CompetencyRoleUser_Users_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PersonProject",
+                name: "CompetencyUser",
+                columns: table => new
+                {
+                    CompetenciesId = table.Column<int>(type: "int", nullable: false),
+                    UsersId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompetencyUser", x => new { x.CompetenciesId, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_CompetencyUser_Competencies_CompetenciesId",
+                        column: x => x.CompetenciesId,
+                        principalTable: "Competencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CompetencyUser_Users_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectUser",
                 columns: table => new
                 {
                     ProjectsId = table.Column<int>(type: "int", nullable: false),
@@ -297,17 +296,17 @@ namespace Competency.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersonProject", x => new { x.ProjectsId, x.UsersId });
+                    table.PrimaryKey("PK_ProjectUser", x => new { x.ProjectsId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_PersonProject_Person_UsersId",
-                        column: x => x.UsersId,
-                        principalTable: "Person",
+                        name: "FK_ProjectUser_Projects_ProjectsId",
+                        column: x => x.ProjectsId,
+                        principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PersonProject_Projects_ProjectsId",
-                        column: x => x.ProjectsId,
-                        principalTable: "Projects",
+                        name: "FK_ProjectUser_Users_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -318,7 +317,7 @@ namespace Competency.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     CompetencyId = table.Column<int>(type: "int", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
@@ -334,9 +333,9 @@ namespace Competency.Infrastructure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Surveys_Person_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Person",
+                        name: "FK_Surveys_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -417,21 +416,21 @@ namespace Competency.Infrastructure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SurveyRequests_Person_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "Person",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_SurveyRequests_Person_RecipientId",
-                        column: x => x.RecipientId,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_SurveyRequests_Surveys_SurveyId",
                         column: x => x.SurveyId,
                         principalTable: "Surveys",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SurveyRequests_Users_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SurveyRequests_Users_RecipientId",
+                        column: x => x.RecipientId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -445,18 +444,18 @@ namespace Competency.Infrastructure.Data.Migrations
                 column: "SurveyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CertificateEmployee_EmployeesId",
-                table: "CertificateEmployee",
+                name: "IX_CertificateUser_EmployeesId",
+                table: "CertificateUser",
                 column: "EmployeesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompetencyEmployee_UsersId",
-                table: "CompetencyEmployee",
+                name: "IX_CompetencyRoleUser_UsersId",
+                table: "CompetencyRoleUser",
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompetencyRolePerson_UsersId",
-                table: "CompetencyRolePerson",
+                name: "IX_CompetencyUser_UsersId",
+                table: "CompetencyUser",
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
@@ -465,23 +464,8 @@ namespace Competency.Infrastructure.Data.Migrations
                 column: "QuestionsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Person_DepartmentId",
-                table: "Person",
-                column: "DepartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Person_ManagerId",
-                table: "Person",
-                column: "ManagerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Person_OfficeId",
-                table: "Person",
-                column: "OfficeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersonProject_UsersId",
-                table: "PersonProject",
+                name: "IX_ProjectUser_UsersId",
+                table: "ProjectUser",
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
@@ -522,9 +506,9 @@ namespace Competency.Infrastructure.Data.Migrations
                 column: "CompetencyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Surveys_EmployeeId",
+                name: "IX_Surveys_UserId",
                 table: "Surveys",
-                column: "EmployeeId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TrainingModules_TrainingId",
@@ -535,6 +519,21 @@ namespace Competency.Infrastructure.Data.Migrations
                 name: "IX_Trainings_CompetencyId",
                 table: "Trainings",
                 column: "CompetencyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_DepartmentId",
+                table: "Users",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_OfficeId",
+                table: "Users",
+                column: "OfficeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserId",
+                table: "Users",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -543,19 +542,19 @@ namespace Competency.Infrastructure.Data.Migrations
                 name: "Answers");
 
             migrationBuilder.DropTable(
-                name: "CertificateEmployee");
+                name: "CertificateUser");
 
             migrationBuilder.DropTable(
-                name: "CompetencyEmployee");
+                name: "CompetencyRoleUser");
 
             migrationBuilder.DropTable(
-                name: "CompetencyRolePerson");
+                name: "CompetencyUser");
 
             migrationBuilder.DropTable(
                 name: "DepartmentSurveyQuestion");
 
             migrationBuilder.DropTable(
-                name: "PersonProject");
+                name: "ProjectUser");
 
             migrationBuilder.DropTable(
                 name: "SurveyQuestionTrainingModule");
@@ -585,7 +584,7 @@ namespace Competency.Infrastructure.Data.Migrations
                 name: "Trainings");
 
             migrationBuilder.DropTable(
-                name: "Person");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Competencies");

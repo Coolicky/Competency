@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Competency.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211229180301_Initial")]
+    [Migration("20211230111847_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace Competency.Infrastructure.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("CertificateEmployee", b =>
+            modelBuilder.Entity("CertificateUser", b =>
                 {
                     b.Property<int>("CertificatesId")
                         .HasColumnType("int");
@@ -36,7 +36,7 @@ namespace Competency.Infrastructure.Data.Migrations
 
                     b.HasIndex("EmployeesId");
 
-                    b.ToTable("CertificateEmployee");
+                    b.ToTable("CertificateUser");
                 });
 
             modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.Certificate", b =>
@@ -144,53 +144,6 @@ namespace Competency.Infrastructure.Data.Migrations
                     b.ToTable("Offices");
                 });
 
-            modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.Person", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IdentityGuid")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("JobRole")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OfficeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("OfficeId");
-
-                    b.ToTable("Person");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
-                });
-
             modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -275,9 +228,6 @@ namespace Competency.Infrastructure.Data.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -285,11 +235,14 @@ namespace Competency.Infrastructure.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CompetencyId");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Surveys");
                 });
@@ -410,22 +363,53 @@ namespace Competency.Infrastructure.Data.Migrations
                     b.ToTable("TrainingModules");
                 });
 
-            modelBuilder.Entity("CompetencyEmployee", b =>
+            modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.User", b =>
                 {
-                    b.Property<int>("CompetenciesId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("UsersId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.HasKey("CompetenciesId", "UsersId");
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("UsersId");
+                    b.Property<string>("IdentityGuid")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
-                    b.ToTable("CompetencyEmployee");
+                    b.Property<string>("JobRole")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OfficeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("OfficeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CompetencyRolePerson", b =>
+            modelBuilder.Entity("CompetencyRoleUser", b =>
                 {
                     b.Property<int>("RolesId")
                         .HasColumnType("int");
@@ -437,7 +421,22 @@ namespace Competency.Infrastructure.Data.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("CompetencyRolePerson");
+                    b.ToTable("CompetencyRoleUser");
+                });
+
+            modelBuilder.Entity("CompetencyUser", b =>
+                {
+                    b.Property<int>("CompetenciesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CompetenciesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("CompetencyUser");
                 });
 
             modelBuilder.Entity("DepartmentSurveyQuestion", b =>
@@ -455,7 +454,7 @@ namespace Competency.Infrastructure.Data.Migrations
                     b.ToTable("DepartmentSurveyQuestion");
                 });
 
-            modelBuilder.Entity("PersonProject", b =>
+            modelBuilder.Entity("ProjectUser", b =>
                 {
                     b.Property<int>("ProjectsId")
                         .HasColumnType("int");
@@ -467,7 +466,7 @@ namespace Competency.Infrastructure.Data.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("PersonProject");
+                    b.ToTable("ProjectUser");
                 });
 
             modelBuilder.Entity("SurveyQuestionTrainingModule", b =>
@@ -485,26 +484,7 @@ namespace Competency.Infrastructure.Data.Migrations
                     b.ToTable("SurveyQuestionTrainingModule");
                 });
 
-            modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.Employee", b =>
-                {
-                    b.HasBaseType("Competency.Core.CompetencyAggregate.Entities.Person");
-
-                    b.Property<int?>("ManagerId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("ManagerId");
-
-                    b.HasDiscriminator().HasValue("Employee");
-                });
-
-            modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.Manager", b =>
-                {
-                    b.HasBaseType("Competency.Core.CompetencyAggregate.Entities.Person");
-
-                    b.HasDiscriminator().HasValue("Manager");
-                });
-
-            modelBuilder.Entity("CertificateEmployee", b =>
+            modelBuilder.Entity("CertificateUser", b =>
                 {
                     b.HasOne("Competency.Core.CompetencyAggregate.Entities.Certificate", null)
                         .WithMany()
@@ -512,26 +492,11 @@ namespace Competency.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Employee", null)
+                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("EmployeesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.Person", b =>
-                {
-                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId");
-
-                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Office", "Office")
-                        .WithMany("Users")
-                        .HasForeignKey("OfficeId");
-
-                    b.Navigation("Department");
-
-                    b.Navigation("Office");
                 });
 
             modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.Requests.SurveyRequest", b =>
@@ -542,11 +507,11 @@ namespace Competency.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Person", "CreatedBy")
+                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
-                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Person", "Recipient")
+                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.User", "Recipient")
                         .WithMany()
                         .HasForeignKey("RecipientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -573,15 +538,15 @@ namespace Competency.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Employee", "Employee")
+                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Competency");
 
-                    b.Navigation("Employee");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.SurveyAggregate.SurveyAnswer", b =>
@@ -632,22 +597,26 @@ namespace Competency.Infrastructure.Data.Migrations
                     b.Navigation("Training");
                 });
 
-            modelBuilder.Entity("CompetencyEmployee", b =>
+            modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.User", b =>
                 {
-                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Competency", null)
+                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Department", "Department")
                         .WithMany()
-                        .HasForeignKey("CompetenciesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
-                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Employee", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Office", "Office")
+                        .WithMany("Users")
+                        .HasForeignKey("OfficeId");
+
+                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.User", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Office");
                 });
 
-            modelBuilder.Entity("CompetencyRolePerson", b =>
+            modelBuilder.Entity("CompetencyRoleUser", b =>
                 {
                     b.HasOne("Competency.Core.CompetencyAggregate.Entities.CompetencyRole", null)
                         .WithMany()
@@ -655,7 +624,22 @@ namespace Competency.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Person", null)
+                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CompetencyUser", b =>
+                {
+                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Competency", null)
+                        .WithMany()
+                        .HasForeignKey("CompetenciesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -677,7 +661,7 @@ namespace Competency.Infrastructure.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PersonProject", b =>
+            modelBuilder.Entity("ProjectUser", b =>
                 {
                     b.HasOne("Competency.Core.CompetencyAggregate.Entities.Project", null)
                         .WithMany()
@@ -685,7 +669,7 @@ namespace Competency.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Person", null)
+                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -705,13 +689,6 @@ namespace Competency.Infrastructure.Data.Migrations
                         .HasForeignKey("TrainingModulesId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.Employee", b =>
-                {
-                    b.HasOne("Competency.Core.CompetencyAggregate.Entities.Manager", null)
-                        .WithMany("Employees")
-                        .HasForeignKey("ManagerId");
                 });
 
             modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.Competency", b =>
@@ -738,7 +715,7 @@ namespace Competency.Infrastructure.Data.Migrations
                     b.Navigation("Modules");
                 });
 
-            modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.Manager", b =>
+            modelBuilder.Entity("Competency.Core.CompetencyAggregate.Entities.User", b =>
                 {
                     b.Navigation("Employees");
                 });

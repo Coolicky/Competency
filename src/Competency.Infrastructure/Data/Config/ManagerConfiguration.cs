@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Competency.Infrastructure.Data.Config;
 
-public class ManagerConfiguration : IEntityTypeConfiguration<Manager>
+public class ManagerConfiguration : IEntityTypeConfiguration<User>
 {
-  public void Configure(EntityTypeBuilder<Manager> builder)
+  public void Configure(EntityTypeBuilder<User> builder)
   {
     builder
       .Property(r => r.IdentityGuid)

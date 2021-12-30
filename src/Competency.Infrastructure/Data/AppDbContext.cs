@@ -27,8 +27,7 @@ public class AppDbContext : DbContext
 
   public DbSet<CompetencyRole> Roles => Set<CompetencyRole>();
   public DbSet<Department> Departments => Set<Department>();
-  public DbSet<Employee> Employees => Set<Employee>();
-  public DbSet<Manager> Managers => Set<Manager>();
+  public DbSet<User> Users => Set<User>();
   public DbSet<Office> Offices => Set<Office>();
   public DbSet<Project> Projects => Set<Project>();
 
